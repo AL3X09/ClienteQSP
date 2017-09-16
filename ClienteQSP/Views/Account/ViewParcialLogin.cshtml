@@ -1,0 +1,64 @@
+﻿@using ClienteQSP.Models
+@model LoginViewModel
+
+@{
+    ViewBag.Title = "Iniciar sesión";
+}
+
+<!--Panel 7-->
+<div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+
+    <!--Body-->
+    <div class="modal-body mb-1">
+
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+            @Html.AntiForgeryToken()
+            <h4>Use una cuenta local para iniciar sesión.</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="md-form form-sm">
+                <i class="fa fa-envelope prefix"></i>
+                @Html.LabelFor(m => m.Email, new { @class = "" })
+
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+                                        <div class="md-form form-sm">
+                                            <i class="fa fa-lock prefix"></i>
+                                            @Html.LabelFor(m => m.Password, new { @class = "" })
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="checkbox">
+                                                <input type="checkbox" id="check">
+                                                @Html.CheckBoxFor(m => m.RememberMe)
+                                                @Html.LabelFor(m => m.RememberMe)
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-2">
+                                            <input type="submit" value="Iniciar sesión" class="btn orange accent-4" />
+                                        </div>
+        }
+
+    </div>
+    <!--Footer-->
+    <div class="modal-footer display-footer">
+        <div class="options text-center text-md-right mt-1">
+            <p>
+                @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword")
+            </p>
+        </div>
+        <button type="button" class="btn orange lighten-3 waves-effect ml-auto" data-dismiss="modal">Cerrar</button>
+    </div>
+
+</div>
+<!--/.Panel 7-->
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/loginval")
+}
+
+

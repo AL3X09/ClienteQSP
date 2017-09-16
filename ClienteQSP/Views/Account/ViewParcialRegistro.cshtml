@@ -1,0 +1,57 @@
+﻿@model ClienteQSP.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Registrarse";
+}
+
+
+<div class="tab-pane fade" id="panel8" role="tabpanel">
+
+    <!--Body-->
+    <div class="modal-body">
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Cree una cuenta nueva.</h4>
+            <hr />
+
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="md-form form-sm">
+                <i class="fa fa-envelope prefix"></i>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+            </div>
+
+
+            <div class="md-form form-sm">
+                <i class="fa fa-lock prefix"></i>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+            </div>
+
+            <div class="md-form form-sm">
+                <i class="fa fa-lock prefix"></i>
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+            </div>
+
+            <div class="text-center form-sm mt-2">
+                <input type="submit" class="btn orange accent-4" value="Registrarse" />
+            </div>
+        }
+    </div>
+
+    <!--Footer-->
+    <div class="modal-footer">
+        <button type="button" class="btn orange lighten-3 waves-effect ml-auto" data-dismiss="modal">Cerrar</button>
+    </div>
+</div>
+<!--/.Panel 8-->
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/loginval")
+}
+
+
+

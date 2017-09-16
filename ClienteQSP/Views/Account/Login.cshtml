@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Sesión";
+    Layout = "~/Views/Shared/_LayoutSesion.cshtml";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="row">
+
+    <div class="col-md-12 col-sm-12">
+        <button type="button" class="btn orange accent-4 btn-lg" data-toggle="modal" data-target="#basicExample">lanzar</button>
+
+
+
+        <!--Modal: Login / Register Form-->
+        <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog cascading-modal" role="document">
+                <!--Content-->
+                <div class="modal-content">
+
+                    <!--Modal cascading tabs-->
+                    <div class="modal-c-tabs">
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs tabs-2 orange accent-3" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-user mr-1"></i> Iniciar Sesión</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i class="fa fa-user-plus mr-1"></i> Registrar</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panels -->
+                        <div class="tab-content">
+                            <!--Panel 7-->
+                            @Html.Partial("ViewParcialLogin")
+                            <!--/.Panel 7-->
+                            <!--Panel 8-->
+                            @Html.Partial("ViewParcialRegistro")
+                            <!--/.Panel 8-->
+                        </div>
+
+                    </div>
+                </div>
+                <!--/.Content-->
+            </div>
+        </div>
+        <!--Modal: Login / Register Form-->
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/loginval")
+}
