@@ -3,13 +3,25 @@
     Layout = "~/Views/Shared/_LayoutSesion.cshtml";
 }
 
-<h2>@ViewBag.Title.</h2>
+<section class="container">
+    <section class="login-form">
+        <img src="../img/logo.png" class="img-responsive" alt="" />
+        <br />
+        @Html.ActionLink("CARGADOR", "Index", "Home", new { area = "" }, new { @class = "form-control input-lg" })
+        <button type="button" class="btn blue accent-4 btn-lg btn-block" data-toggle="modal" data-target="#modalLRForm">Iniciar Sesión</button>
+        <div class="form-links">
+            <a href="#">&copy; @DateTime.Now.Year - Bogotá D.C.</a>
+            <p>Contruido con:</p>
+            <a href="#">http://www.mdbootstrap.com/</a>
+            <a href="#">http://www.bootstrapzen.com/</a>
+            <a href="#">http://www.materializecss.com/</a>
+        </div>
+    </section>
+</section>
+
 <div class="row">
 
     <div class="col-md-12 col-sm-12">
-        <button type="button" class="btn orange accent-4 btn-lg" data-toggle="modal" data-target="#basicExample">lanzar</button>
-
-
 
         <!--Modal: Login / Register Form-->
         <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

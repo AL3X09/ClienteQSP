@@ -41,10 +41,16 @@ namespace ClienteQSP
             bundles.Add(new StyleBundle("~/Content/materialize").Include(
                       "~/Content/materialize.css",
                       "~/Content/font-awesome.css",
-                      "~/Content/material-icons.css"));
+                      "~/Content/material-icons.css"
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/materializejs").Include(
                       "~/Scripts/materialize.js"));
+
+            // Utilizo blurred
+            bundles.Add(new ScriptBundle("~/bundles/blurred").Include(
+                        "~/Scripts/background-blur.js"));
+
 
             // Login view
             bundles.Add(new ScriptBundle("~/bundles/loginval").Include(
