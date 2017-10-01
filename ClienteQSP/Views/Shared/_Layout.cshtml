@@ -11,15 +11,17 @@
 </head>
 <body>
 
+    <!--Menu -->
+
         <ul id="slide-out" class="side-nav">
             <li>
                 <div class="user-view">
                     <div class="background">
-                        <img src="@Url.Content("~/img/Unipanamericana.jpg")">
+                        <img src="@Url.Content("~/img/user-profile.jpg")">
                     </div>
                     <a href="#!user"><img class="circle" src="@Url.Content("~/img/avatar.jpg")"></a>
                     <a href="#!name"><span class="white-text name">John Doe</span></a>
-                    <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                    <a href="#!" class="dropdown-button" data-activates="droupdown1"><span class="white-text email">jdandturk@gmail.com <i class="material-icons">arrow_drop_down_circle</i></span></a>
                 </div>
             </li>
             <li><a href="#!"><i class="material-icons">streetview</i>ADMINISTRACIÓN</a></li>
@@ -29,15 +31,25 @@
             <li><a class="waves-effect" href="#!"><i class="material-icons">info</i>Ayuda</a></li>
         </ul>
 
-        @*Html.ActionLink(" Quien Se Pega !!", "Index", "Home", new { area = "" }, new { @class = "brand-logo" })*@
+    <!--Dropdown -->
+    <ul id="droupdown1" class="dropdown-content">
+        <li><a href="/Manage/ChangePassword"><i class="material-icons">person</i>Perfile</a></li>
+        <li id="cerrarseson"><a class="waves-effect" href="/Ayuda/AyudaView"><i class="material-icons">power_settings_new</i>Salir</a></li>
+    </ul>
+    <!--/Dropdown -->
+
+    <!--/ Menu -->
 
         <!--Navbar-->
-        <nav class="navbar-dark orange">
+        <nav class="nav-extended orange accent-4">
             <div class="nav-wrapper">
-                <a href="#" data-activates="slide-out" id="button-collapse" class="brand-logo"><i class="material-icons medium icon-demo">menu</i>Quien Se Pega !!</a>
-                <ul class="right hide-on-med-and-down">
-                    <li><a href="mobile.html"><i class="material-icons">settings_power</i></a></li>
-                </ul>
+                <a id="logo-container" href="#!" class="brand-logo"><img src="@Url.Content("~/img/logo2.png")" alt="logo"></a>
+            </div>
+            <div class="nav-content" id="contenidoNav">
+
+                <a href="#!" data-activates="slide-out" id="button-collapse" class="btn-floating btn-large halfway-fab waves-effect waves-light orange">
+                    <i class="material-icons">menu</i>
+                </a>
             </div>
         </nav>
 
