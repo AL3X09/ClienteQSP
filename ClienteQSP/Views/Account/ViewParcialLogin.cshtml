@@ -30,12 +30,9 @@
                                             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                         </div>
-                                        <div class="form-group">
-                                            <div class="checkbox">
-                                                <input type="checkbox" id="check">
-                                                @Html.CheckBoxFor(m => m.RememberMe)
-                                                @Html.LabelFor(m => m.RememberMe)
-                                            </div>
+                                        <div class="md-form form-sm">
+                                            <input type="checkbox" class="filled-in" id="RememberMe" name="RememberMe">
+                                            @Html.LabelFor(m => m.RememberMe)
                                         </div>
                                         <div class="text-center mt-2">
                                             <input type="submit" value="Iniciar sesión" class="btn orange accent-4" />

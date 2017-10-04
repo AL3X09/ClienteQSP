@@ -190,6 +190,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdministracionController.cs" />
+    <Compile Include="Controllers\AyudaController.cs" />
+    <Compile Include="Controllers\CrearParcheController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -261,6 +264,9 @@
     <Content Include="Views\Account\ViewParcialLogin.cshtml" />
     <Content Include="Views\Account\ViewParcialRegistro.cshtml" />
     <Content Include="Views\Shared\_LayoutSesion.cshtml" />
+    <Content Include="Views\Administracion\AdministracionView.cshtml" />
+    <Content Include="Views\CrearParche\CrearParcheView.cshtml" />
+    <Content Include="Views\Ayuda\AyudaView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

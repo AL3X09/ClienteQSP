@@ -1,0 +1,115 @@
+﻿
+@{
+    //VISTA DE ADMINISTRACIÓN
+    ViewBag.Title = "Administración";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col l6 s12">
+        <h2 class="center-align">Administración</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col s12 m4 12">
+
+        <div class="card hoverable">
+            <div class="card-image">
+                <img class="activator" src="@Url.Content("~/img/concatqsp.png")">
+                <span class="card-title">Administrar Usuarios</span>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Administrar Usuarios<i class="material-icons right">close</i></span>
+                <p>
+                    Aquí podra administrar cada uno de los roles del aplicativo.
+                </p>
+                <p>
+                    <a href="/Administracion/UsuariosView"><i class="material-icons">group</i></a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="col s12 m4 12">
+
+        <div class="card hoverable">
+            <div class="card-image">
+                <img class="activator" src="@Url.Content("~/img/shieldqsp.png")">
+                <span class="card-title">Administrar Roles</span>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Administrar Roles<i class="material-icons right">close</i></span>
+                <p>
+                    Aquí podra administrar cada uno de los roles del aplicativo.
+                </p>
+                <p>
+                    <a href="/Administracion/RolesView"><i class="material-icons">recent_actors</i></a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col s12 m4 12">
+
+        <div class="card hoverable">
+            <div class="card-image">
+                <img class="activator" src="@Url.Content("~/img/sidemenu-hero.jpg")">
+                <span class="card-title">Administrar Pruebas</span>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Administrar Permisos<i class="material-icons right">close</i></span>
+                <p>
+                    Aquí podra administrar ver pruebas del aplicativo.
+                </p>
+                <p>
+                    <a href="/Administracion/PermisosView"><i class="material-icons">queue_play_next</i></a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col s12 m4 12">
+
+        <div class="card hoverable">
+            <div class="card-image">
+                <img class="activator" src="@Url.Content("~/img/emailqsp.png")">
+                <span class="card-title">Administrar Plantillas Correos</span>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Administrar Plantillas Correos<i class="material-icons right">close</i></span>
+                <p>
+                    Aquí podra administrar cada uno de las plantillas usadas por los correos que envia el alplicativo.
+                </p>
+                <p>
+                    <a href="/Administracion/PlantillasCorreoView"><i class="material-icons">email</i></a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col s12 m4 12">
+
+        <div class="card hoverable">
+            <div class="card-image">
+                <img class="activator" src="@Url.Content("~/img/medalqsp.png")">
+                <span class="card-title">Auditorias</span>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">Auditorias<i class="material-icons right">close</i></span>
+                <p>
+                    Aquí podra ver cada una de las acciones y cambios realizados dentro del aplicativo.
+                </p>
+                <p>
+                    <a href="/Administracion/AuditoriasView"><i class="material-icons">feedback</i></a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
