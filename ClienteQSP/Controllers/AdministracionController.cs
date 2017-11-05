@@ -13,7 +13,35 @@ namespace ClienteQSP.Controllers
         {
             return View();
         }
+        
+        // GET: Administracion
+        public ActionResult UsuariosView()
+        {
+            return View();
+        }
+        // GET: Administracion
+        public ActionResult RolesView()
+        {
+            return View();
+        }
 
+        // GET: Administracion
+        public ActionResult PlantillasCorreoView()
+        {
+            return View();
+        }
+
+        // GET: Administracion
+        public ActionResult PermisosView()
+        {
+            return View();
+        }
+
+        // GET: Administracion
+        public ActionResult AuditoriasView()
+        {
+            return View();
+        }
         // GET: Administracion/Details/5
         public ActionResult Details(int id)
         {

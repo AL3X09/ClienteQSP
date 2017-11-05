@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Usuarios</h2>
+
+<div class="row" id="divProductos">
+    <div class="col s12 m12 l12">
+        <!--cargo la grilla-->
+        <div id="jsGrid"></div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jsGrid")
+@Scripts.Render("~/bundles/usuariosjs")

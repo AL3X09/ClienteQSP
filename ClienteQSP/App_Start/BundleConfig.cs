@@ -56,8 +56,8 @@ namespace ClienteQSP
             bundles.Add(new ScriptBundle("~/bundles/loginval").Include(
                         "~/Scripts/login.js"));
             // home view
-            bundles.Add(new ScriptBundle("~/bundles/homejs").Include(
-                        "~/Scripts/home.js"));
+            bundles.Add(new ScriptBundle("~/bundles/crearparchejs").Include(
+                        "~/Scripts/crearparche.js"));
 
         }
     }
