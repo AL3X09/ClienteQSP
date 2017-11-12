@@ -22,7 +22,8 @@ namespace ClienteQSP
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/popper.min.js",
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/iziToast.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
@@ -30,7 +31,8 @@ namespace ClienteQSP
                       "~/Content/font-awesome.css",
                        "~/Content/mdb.css",
                       "~/Content/style.css",
-                      "~/Content/compiled.min.css"));
+                      "~/Content/compiled.min.css",
+                      "~/Content/iziToast.min.css"));
             // Utilizo bootstrap desing
 
             bundles.Add(new ScriptBundle("~/bundles/mdb").Include(

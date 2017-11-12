@@ -35,21 +35,26 @@
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs tabs-2 orange accent-3" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-user mr-1"></i> Iniciar Sesión</a>
+                                <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab" id="btnSesion"><i class="fa fa-user mr-1"></i> Iniciar Sesión</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i class="fa fa-user-plus mr-1"></i> Registrar</a>
+                                <a class="nav-link" data-toggle="tab" href="#panel8" role="tab" id="btnRegistro"><i class="fa fa-user-plus mr-1"></i> Registrar</a>
                             </li>
                         </ul>
 
                         <!-- Tab panels -->
                         <div class="tab-content">
-                            <!--Panel 7-->
-                            @Html.Partial("ViewParcialLogin")
-                            <!--/.Panel 7-->
-                            <!--Panel 8-->
-                            @Html.Partial("ViewParcialRegistro")
-                            <!--/.Panel 8-->
+                            <!--Modal 1-->
+                            @{
+                                Html.RenderPartial("ViewParcialLogin", new ClienteQSP.Models.LoginViewModel());
+                            }
+
+                            <!--/.Modal 1-->
+                            <!--Modal 2-->
+                            @{
+                                Html.RenderPartial("ViewParcialRegistro", new ClienteQSP.Models.RegisterViewModel());
+                            }
+                            <!--/.Modal 2-->
                         </div>
 
                     </div>
@@ -63,7 +68,7 @@
 
 </div>
 
-
 @section Scripts {
-    @Scripts.Render("~/bundles/loginval")
+    @Scripts.Render("~/bundles/jqueryval")
+
 }

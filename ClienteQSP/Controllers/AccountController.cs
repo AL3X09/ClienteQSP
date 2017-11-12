@@ -9,6 +9,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ClienteQSP.Models;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using System.Text;
 
 namespace ClienteQSP.Controllers
 {
@@ -17,10 +21,26 @@ namespace ClienteQSP.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private string Baseurl = "http://localhost:59619/";
+        private HttpClient cliente = new HttpClient();
 
         public AccountController()
         {
         }
+
+        //Creo una subclase para manejar los mensajes enviados del las API consultadas
+        public class Msg
+        {
+            public string tipo { get; set; }
+            public string mensaje { get; set; }
+            public int codigo { get; set; }
+        }
+
+        public class RootObject
+        {
+            public Msg[] msg { get; set; }
+        }
+        //
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
@@ -61,35 +81,162 @@ namespace ClienteQSP.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
+        //Metodo que ejecuta el inicio de sesion
+        // POST: /Account/ViewPartialLogin
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> ViewParcialLogin(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
-            // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            switch (result)
+            cliente.BaseAddress = new Uri(Baseurl);
+            cliente.DefaultRequestHeaders.Clear();
+            //Define request data format  
+            cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //envio datos en formato json a la api a consumir
+            StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+            try
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Intento de inicio de sesión no válido.");
-                    return View(model);
+                //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
+                HttpResponseMessage result = await cliente.PostAsync("api/Ingreso/Usuarios", content);
+
+                var respondJsonAPI = await result.Content.ReadAsStringAsync(); // recivo el json que me envia la api, como no tengo conocimeinto de como enviar el json parseado a la vista realice lo siguente
+
+
+                if (result.IsSuccessStatusCode)
+                {
+                    //creo un array a partir del json devuelto por la api para tratarlo desde aca y poder enviar los diferentes errores
+                    Msg[] respuesta = JsonConvert.DeserializeObject<Msg[]>(respondJsonAPI);
+                    //recorro el vector de la respuesta y valido
+                    foreach (var item in respuesta)
+                    {
+
+                        if (item.codigo != 200)
+                        {
+                            ModelState.AddModelError(string.Empty, item.mensaje);
+                        }
+                        else if (item.codigo == 200)
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+
+
+                    }
+                    //ModelState.AddModelError(string.Empty, "Intento de inicio de sesión no válido.");
+                }
+                else
+                {
+                    //envio error a la api logs errores
+                    //TODO
+                    //envio un mensaje al usuario
+                    ModelState.AddModelError(string.Empty, "Estamos presentando dificultades en el momento por favor intente mas tarde");
+                }
             }
+            catch (Exception e)
+            {
+                //envio error a la api logs errores
+                //TODO
+                Console.WriteLine(e);
+                //envio error mensaje al usuario
+                ModelState.AddModelError(string.Empty, "Estamos presentando dificultades en el momento por favor intente mas tarde");
+            }
+            //retorno la vista en caso de que no se efectue el regsitro
+            return View("Login", model);
+
         }
+
+        
+        //
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Enviar correo electrónico con este vínculo
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirmar cuenta", "Para confirmar la cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
+            return View(model);
+        }
+
+        //Metodo que ejecuta el registro
+        // POST: /Account/ViewPartialLogin
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ViewParcialRegistro(RegisterViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                cliente.BaseAddress = new Uri(Baseurl);
+
+                cliente.DefaultRequestHeaders.Clear();
+                //Define request data format  
+                cliente.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //envio datos en formato json a la api a consumir
+                StringContent content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+                try
+                {
+
+                    //Sending request to find web api REST service resource GetAllEmployees using HttpClient  
+                    HttpResponseMessage result = await cliente.PostAsync("api/Registro/Usuarios", content);
+
+                    //Capturo la respuesta retornada por la api
+                    string respondJsonAPI = await result.Content.ReadAsStringAsync();
+
+                    if (result.IsSuccessStatusCode)
+                    {
+                        //ViewData["responJsonText"] = serializer.Serialize(responMessage);
+                        dynamic dynJson = JsonConvert.DeserializeObject(respondJsonAPI);
+                        ViewBag.SomeData = respondJsonAPI;
+                    }
+                    else
+                    {
+                        //envio error a la api logs errores
+                        //TODO
+                        //envio un mensaje al usuario no se debe mostrar nada
+                        ModelState.AddModelError(string.Empty, "Estamos presentando dificultades en el momento por favor intente mas tarde");
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    //envio error a la api logs errores
+                    //TODO
+                    Console.WriteLine(e);
+                    //envio error mensaje al usuario
+                    ModelState.AddModelError(string.Empty, "Estamos presentando dificultades en el momento por favor intente mas tarde");
+                }
+
+            }
+
+            // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
+            return View("Login", model);
+        }
+
 
         //
         // GET: /Account/VerifyCode
@@ -134,44 +281,7 @@ namespace ClienteQSP.Controllers
             }
         }
 
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Enviar correo electrónico con este vínculo
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirmar cuenta", "Para confirmar la cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
-            }
-
-            // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
-            return View(model);
-        }
-
+        
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
